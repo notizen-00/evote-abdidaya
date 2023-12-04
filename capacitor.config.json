@@ -1,0 +1,9 @@
+{
+"appId": "com.evoteabdidaya.app",
+"appName": "adidaya-evote",
+"webDir": "dist",
+"server": {
+  "androidScheme": "https",
+  "cleartext":"true"
+}
+}
