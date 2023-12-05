@@ -1,11 +1,20 @@
 <template>
     <div>
-        <v-container class="bg-red test mt-10 mb-10" :class="{ 'barcode-scanner-active': isScanning }">
+        <div :class="{'barcode-scanner-modal bg-red-600 bg-opacity-40 ': isScanning}" style="height:100px;">
+        <div  :class="{ 'barcode-scanner-active bg-warning hole': isScanning }" style="height:50%;">
+
+          
+
+       
             {{ barcodee }}
-        </v-container>
+        </div>
+        </div>
 
         <v-btn @click="promptStartScan">Start Scan</v-btn>
-        <button @click="stopScan">Stop Scan</button>
+        <v-btn @click="stopScan">Stop Scan</v-btn>
+        <div class="sticky bottom-0">
+        <v-btn class="absolute bottom-0" absolute icon="fas fa-flashlight" @click="openSettings"></v-btn>
+        </div>
     </div>
 </template>
 
@@ -27,9 +36,9 @@
     const promptStartScan = async () => {
         shouldStopScan.value = false; // Reset the flag before starting a new scan
 
-        const userConfirmed = window.confirm('Apakah yakin ingin vote, jatah vote 1 kali ?');
+        // const userConfirmed = window.confirm('Apakah yakin ingin vote, jatah vote 1 kali ?');
 
-        if (userConfirmed) {
+        // if (userConfirmed) {
             isScanning.value = true;
 
             const listener = await BarcodeScanner.addListener(
@@ -80,9 +89,20 @@
             );
 
             await BarcodeScanner.startScan();
-        }
+        // }
     };
+    const toggleTorch = async () => {
+  await BarcodeScanner.toggleTorch();
+};
 
+const openSettings = async () => {
+    const { available } =
+    await BarcodeScanner.isGoogleBarcodeScannerModuleAvailable();
+    alert(available)
+  return available;
+
+// await BarcodeScanner.installGoogleBarcodeScannerModule();
+};
     const stopScan = async () => {
         isScanning.value = false;
         await BarcodeScanner.removeAllListeners();
@@ -91,9 +111,22 @@
 </script>
 
 <style scoped>
-    body.barcode-scanner-active {
-        visibility: hidden;
-    }
+  
+.hole {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: red;
+    border-radius: 50%;
+}
+    .barcode-scanner-active {
+        visibility: visible;
+        --background: transparent;
+        --ion-background-color: transparent;
+      }
 
     .barcode-scanner-modal {
         visibility: visible;
