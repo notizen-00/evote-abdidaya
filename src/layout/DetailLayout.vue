@@ -1,8 +1,7 @@
 <template>
     <v-layout class="rounded-md">
-      <v-app-bar title="E-Voting"></v-app-bar>
-  
-      <v-main >
+      
+      <v-main class="">
         <slot name="content">
 
         </slot>
@@ -13,5 +12,5 @@
   </template>
 
   <script setup>
-  import BottomBar from './partial/BottomBar.vue';
+  import BottomBar from '@/layout/partial/DetailBottomBar.vue';
   </script>

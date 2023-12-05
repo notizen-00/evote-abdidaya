@@ -32,6 +32,8 @@ const checkMock = async (whiteList) => {
     alert(error);
   }
 };
+
+
 </script>
 
 <style scoped>

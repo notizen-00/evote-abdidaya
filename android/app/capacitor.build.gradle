@@ -10,6 +10,9 @@ android {
 apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
     implementation project(':capacitor-mlkit-barcode-scanning')
+    implementation project(':capacitor-device')
+    implementation project(':capacitor-geolocation')
+    implementation project(':capacitor-toast')
     implementation project(':capacitor-mock-location-checker')
 
 }

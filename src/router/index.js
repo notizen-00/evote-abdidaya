@@ -1,11 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '@/components/HelloWorld.vue'
-import Beranda from '@/pages/Beranda.vue'
-import Agenda from '@/pages/Agenda.vue'
-import Pengumuman from '@/pages/Pengumuman.vue'
-import Panduan from '@/pages/Panduan.vue'
-import Video from '@/pages/Video.vue'
-import DetailHotel from '@/pages/DetailHotel.vue'
+import Home from '../pages/Home.vue'
+import Vote from '../pages/Vote.vue'
+import Votes from '@/pages/Votes.vue'
+import Device from '../pages/Device.vue'
 
 const routes = [
     {
@@ -14,39 +11,26 @@ const routes = [
       component:Home
     },
     {
-      path:'/beranda',
-      name:'beranda',
-      component:Beranda
-    }
-    ,
-    {
-      path:'/video',
-      name:'video',
-      component:Video
-    }
-    ,
-    {
-      path:'/panduan',
-      name:'panduan',
-      component:Panduan
-    }
-    ,
-    {
-      path:'/agenda',
-      name:'agenda',
-      component:Agenda
-    }
-    ,
-    {
-      path:'/pengumuman',
-      name:'pengumuman',
-      component:Pengumuman
+      path: '/detail-vote',
+      name:'detail_vote',
+      component:Vote
     },
     {
-      path: "/detail_hotel/:placeId",
-      name:'detailHotel',
-      component:DetailHotel
-    }
+      path: '/vote',
+      name:'vote',
+      component:Votes
+    },
+    {
+      path: '/beranda',
+      name:'beranda',
+      component:Home
+    },
+    {
+      path: '/device',
+      name:'device',
+      component:Device
+    },
+   
    
   ]
   
