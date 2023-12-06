@@ -1,7 +1,8 @@
 <script setup>
 import DetailLayout from '@/layout/DetailLayout.vue'
 import ApplicationLayout from '@/layout/ApplicationLayout.vue'
-import HelloWorld from '../components/HelloWorld.vue';
+import Default from '@/pages/detail/Default.vue';
+import Qrcode from '@/pages/detail/Qrcode.vue';
 import Scanner from '../components/Scanner.vue';
 import {ref,inject,onBeforeUnmount} from 'vue'
 import {storeToRefs} from 'pinia'
@@ -20,25 +21,9 @@ onBeforeUnmount(() => {
 <template>
 
 
-  <DetailLayout v-if="getDetail.type == 'default'">
-    <template #content>
+  <Default v-if="getDetail.type == 'list'"></Default>
 
-      <!-- <Scanner></Scanner> -->
-        <DetailVotes v-if="getDetail.type =='default'"></DetailVotes>
-      {{ 
-        getDetail.type
-      }}
-        
-    
-    </template>
-  </DetailLayout>
-
-  <ApplicationLayout v-if="getDetail.type =='qrcode' ">
-    <template #content>
-        <Scanner v-if="getDetail.type == 'qrcode'"></Scanner>
-
-    </template>  
-  </ApplicationLayout>
+  <Qrcode v-if="getDetail.type == 'qrcode'"></Qrcode>
   
 
  

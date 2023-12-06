@@ -2,7 +2,7 @@
   <v-layout class="overflow-visible" style="height: 56px;">
     <v-bottom-navigation v-model="value" class="relative -z-10" color="teal" grow relative>
       <v-btn to="/beranda">
-        <v-icon>fa-light fa-bell</v-icon>
+        <v-icon>fa-light fa-home</v-icon>
       </v-btn>
 
       <v-btn to="/vote" variant="filled" class="rounded-xl" transform="translate(-50%, -50%)">

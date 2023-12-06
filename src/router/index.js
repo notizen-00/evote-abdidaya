@@ -1,14 +1,15 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../pages/Home.vue'
-import Vote from '../pages/Vote.vue'
+import Vote from '../pages/DetailVote.vue'
 import Votes from '@/pages/Votes.vue'
 import Device from '../pages/Device.vue'
+import Start from '@/pages/Start.vue'
 
 const routes = [
     {
       path: '/',
-      name:'Home',
-      component:Home
+      name:'Start',
+      component:Start
     },
     {
       path: '/detail-vote',

@@ -1,15 +1,17 @@
 <template>
-     <v-card variant="tonal" color="info" max-width="280" class="mx-auto">
+     <v-card variant="tonal" color="info" class="mx-auto">
         <v-card-text class="text-center">
 
             <v-icon class="">fa-duotone fa-mobile</v-icon> <span class="text-capitalize">{{ device.manufacturer }}</span> -- {{ device.model }}
         </v-card-text>
         <v-card-text class="text-center">
-            {{ deviceId.identifier }}
+            Unique ID : {{ deviceId.identifier }}
         </v-card-text>
         <v-divider thickness="3" class="border-opacity-75 border-blue-400"></v-divider>
-        <v-card-actions>
-            <v-btn variant="tonal">Test</v-btn>
+        <v-card-actions class="d-flex justify-between">
+            <v-chip color="green" variant="tonal">Jatah Voting : 3</v-chip>
+            
+            <v-chip color="green" variant="tonal">Terpakai : 0</v-chip>
         </v-card-actions>
       
      </v-card>

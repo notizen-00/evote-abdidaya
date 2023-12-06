@@ -16,6 +16,7 @@
     "@capacitor/geolocation": "^5.0.6",
     "@capacitor/ios": "^5.5.1",
     "@capacitor/toast": "^5.0.6",
+    "@fawmi/vue-google-maps": "^0.9.79",
     "@ionic/vue": "^7.5.7",
     "@ionic/vue-router": "^7.5.7",
     "axios": "^1.6.2",
@@ -24,9 +25,11 @@
     "pinia-plugin-persistedstate": "^3.2.0",
     "vue": "^3.3.8",
     "vue-router": "^4.2.5",
+    "vue3-apexcharts": "^1.4.4",
     "vuetify": "^3.4.4"
   },
   "devDependencies": {
+    "@capacitor/assets": "^3.0.1",
     "@capacitor/cli": "^5.5.1",
     "@vitejs/plugin-vue": "^4.5.0",
     "autoprefixer": "^10.4.16",

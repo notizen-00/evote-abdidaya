@@ -20,7 +20,7 @@ onMounted(()=>{
   <ApplicationLayout>
     <template #content>
         <v-container>
-            <h3 class="text-h6 text-center"> - List voting Abdidaya Ormawa 2023 - </h3>
+            <h3 class="text-h6 text-center">Daftar Voting</h3>
             <v-divider thickness="8" color="success" class="border-blue-600 border-opacity-90"></v-divider>
         </v-container>
         <ListVote class="mt-10"></ListVote>

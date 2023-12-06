@@ -25,11 +25,19 @@
                     <span class="text-slate-100 text-md">
                         <v-icon class="mr-1 " size="15">fa-light fa-link</v-icon> {{ item.vote_id.length }} <small>votes</small>
                     </span>
+                    <span>
+                
+                     
+                    </span>
                 </div>
-                <v-btn variant="outlined" @click="detailVotes(item.Id)" class="ml-auto mt-2 pr-3 text-capitalize"
-                    :append-icon="item.type != 'qrcode' ? 'fas fa-check-to-slot' : 'fas fa-qrcode'" color="white">
-                    Vote
+                <v-btn variant="outlined" @click="checkVoteResult[item.Id] ?  checked(item.Id):detailVotes(item.Id) " class="ml-auto mt-2 pr-3 text-capitalize"
+                    :append-icon="item.type != 'qrcode' ? 'fas fa-check-to-slot' : 'fas fa-qrcode'" :color="checkVoteResult[item.Id] ? 'grey':'white'">
+                    {{ checkVoteResult[item.Id] ? 'Voted' : 'Vote' }}
                 </v-btn>
+                <!-- <v-btn variant="outlined" @click="store.voteStore.checkVote(item.Id) " class="ml-auto mt-2 pr-3 text-capitalize"
+                    :append-icon="item.type != 'qrcode' ? 'fas fa-check-to-slot' : 'fas fa-qrcode'" color="white">
+                    Vote Check
+                </v-btn> -->
             </div>
         </v-card-actions>
      </div>
@@ -47,13 +55,15 @@
         storeToRefs
     } from 'pinia';
     import { useRouter } from 'vue-router';
+import { Toast } from '@capacitor/toast';
     const store = inject('store')
     const router = useRouter();
     const {
-        getList
+        getList,
+        getCheck
     } = storeToRefs(store.voteStore)
     const loading  = ref(true)
-
+    const checkVoteResult = ref({});
     const fetch = async(value) => {
 
      const response =  await axios.get('https://form.apps.unej.ac.id/download/noco/voting-apps/jenis_vote/thumbnail/9MPydzWdkgipknX_Lk.jpg', {
@@ -65,16 +75,44 @@
     return response.data;
 
     }
+    const checked = async(id) =>{
+        await Toast.show({
+                text: 'Anda tidak bisa vote 2 kali',
+                duration: 2000
+              });
+    }
+    const checkVote = async (id) => {
+  try {
+    const deviceId = store.voteStore.deviceId;
+    const url = `https://form.apps.unej.ac.id/api/v1/db/data/v1/voting-apps/vote?limit=25&shuffle=0&offset=0&%26=(deviceId,eq,${deviceId})&where=(nc_198x___jenis_vote_id,eq,${id})`;
+    const config = {
+      headers: {
+        'xc-token': '5_YUBoU2hxZADrLYnJCRcgLZU3WMhTA1n2lAxFOn',
+        'Content-Type': 'application/json',
+      },
+    };
+    const response = await axios.get(url, config);
 
+    checkVoteResult.value[id] = response.data.list.length > 0 ? 1 : 0;
+  } catch (e) {
+    console.error(e.message);
+    checkVoteResult.value[id] = 'Error Checking Vote';
+  }
+};
+
+ 
     const detailVotes = async(id) => {
             store.voteStore.fetchDetail(id)
+            store.voteStore.setVoteId(id)
 
             router.push('/detail-vote')
 
     }
-    onMounted(() => {
+    onMounted(async () => {
         store.voteStore.fetchList()
-
+        for (const item of getList.value) {
+    await checkVote(item.Id);
+  }
         setTimeout(() => {
                 loading.value = false
         }, 500);

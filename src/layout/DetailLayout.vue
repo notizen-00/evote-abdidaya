@@ -1,5 +1,5 @@
 <template>
-    <v-layout class="rounded-md">
+    <v-layout>
       
       <v-main class="">
         <slot name="content">
@@ -8,7 +8,7 @@
       </v-main>
     
     </v-layout>
-    <BottomBar></BottomBar>
+  
   </template>
 
   <script setup>

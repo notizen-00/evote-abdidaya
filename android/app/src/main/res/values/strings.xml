@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">evote</string>
+    <string name="app_name">Vote Abdidaya</string>
     <string name="title_activity_main">evote</string>
     <string name="package_name">com.evoteabdidaya.app</string>
     <string name="custom_url_scheme">com.evoteabdidaya.app</string>
