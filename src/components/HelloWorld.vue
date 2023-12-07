@@ -9,6 +9,9 @@
 import { MockLocationChecker } from 'capacitor-mock-location-checker';
 import {onMounted} from 'vue'
 import { Toast } from '@capacitor/toast';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 const checkMock = async (whiteList) => {
   try {
     const checkResult = await MockLocationChecker.checkMock({ whiteList });
@@ -18,9 +21,11 @@ const checkMock = async (whiteList) => {
       await Toast.show({
         text: 'Perangkat Anda terdeteksi fake gps'
       });
+
+      router.push('/')
     } else {
       await Toast.show({
-        text: 'Perangkat Anda aman , silahkan melakukan voting'
+        text: 'Fake Gps Checker System : Device Anda aman '
       });
      
     }

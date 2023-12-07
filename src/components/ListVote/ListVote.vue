@@ -1,6 +1,16 @@
 <template>
-
-    <v-card variant="tonal" class="mx-auto mt-5 rounded-xl" max-width="380" v-for="item in getList" :key="item">
+    <v-overlay
+    :model-value="overlay"
+    class="align-center justify-center"
+  >
+    <v-progress-circular
+      color="primary"
+      indeterminate
+      size="64"
+    ></v-progress-circular>
+  </v-overlay>
+    
+    <v-card v-if="isCheckVoteComplete" variant="tonal" class="mx-auto mt-5 rounded-xl" max-width="380" v-for="item in getList" :key="item">
         <v-skeleton-loader   v-if="loading" type="card"></v-skeleton-loader>
         <div v-else>
         <v-img class="align-end text-white" max-height="300" type="image/webp" :src="'https://form.apps.unej.ac.id/'+item.thumbnail[0].path" cover>
@@ -16,7 +26,7 @@
             {{ item.judul_vote }}
         </div>
         <v-card-actions class="bg-info h-14">
-            
+
             <div class="d-flex justify-content-between w-full">
                 <div class="ml-3">
                     <span class="text-slate-300 text-xs">
@@ -34,6 +44,7 @@
                     :append-icon="item.type != 'qrcode' ? 'fas fa-check-to-slot' : 'fas fa-qrcode'" :color="checkVoteResult[item.Id] ? 'grey':'white'">
                     {{ checkVoteResult[item.Id] ? 'Voted' : 'Vote' }}
                 </v-btn>
+                
                 <!-- <v-btn variant="outlined" @click="store.voteStore.checkVote(item.Id) " class="ml-auto mt-2 pr-3 text-capitalize"
                     :append-icon="item.type != 'qrcode' ? 'fas fa-check-to-slot' : 'fas fa-qrcode'" color="white">
                     Vote Check
@@ -60,10 +71,14 @@ import { Toast } from '@capacitor/toast';
     const router = useRouter();
     const {
         getList,
-        getCheck
+        getCheck,
+        getVoteResult
     } = storeToRefs(store.voteStore)
     const loading  = ref(true)
+    const overlay = ref(true)
     const checkVoteResult = ref({});
+    const isCheckVoteComplete = ref(false);
+
     const fetch = async(value) => {
 
      const response =  await axios.get('https://form.apps.unej.ac.id/download/noco/voting-apps/jenis_vote/thumbnail/9MPydzWdkgipknX_Lk.jpg', {
@@ -109,10 +124,22 @@ import { Toast } from '@capacitor/toast';
 
     }
     onMounted(async () => {
-        store.voteStore.fetchList()
-        for (const item of getList.value) {
-    await checkVote(item.Id);
-  }
+
+        try {
+        await store.voteStore.fetchList();
+        
+        await Promise.all(getList.value.map(async (item) => {
+            await checkVote(item.Id);
+        }));
+
+    
+        isCheckVoteComplete.value = true;
+        overlay.value = false
+    } catch (error) {
+        console.error(error.message);
+    }
+   
+
         setTimeout(() => {
                 loading.value = false
         }, 500);

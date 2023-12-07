@@ -2,7 +2,7 @@
     <div>
       <!-- {{ getDetail }} -->
 
-      <v-text-field
+      <!-- <v-text-field
       v-model="search"
       class="w-10/12 mx-auto"
       rounded="xl"
@@ -13,10 +13,10 @@
       single-line
       hide-details
       @click:append-inner="onClick"
-    ></v-text-field>
-        <div class="mx-auto text-center w-full">
+    ></v-text-field> -->
+        <!-- <div class="mx-auto text-center w-full">
             {{ search }}
-        </div>
+        </div> -->
       <v-card
         v-for="item in getOrmawa"
         :key="item.Id"
@@ -51,13 +51,49 @@
   import { storeToRefs } from 'pinia';
 
   import axios from 'axios'
+import { useRouter } from 'vue-router';
   const store = inject('store');
+  const router = useRouter();
   const { getDetail,getNominasiId,getPt,getOrmawa } = storeToRefs(store.voteStore);
+  const { getLocation } = storeToRefs(store.mapStore)
   const isActive = ref(null);
   const imagePaths = ref({});
   const search = ref('')
 
- 
+  const lokasi_unej = ref({
+    lat:-8.1642276,
+    lng:113.7170735
+})
+
+
+const deg2rad = (deg) => {
+  return deg * (Math.PI / 180);
+};
+  const checkLocationWithinRadius = (currentLocation, radiuss) => {
+  const { lat: currentLat, lng: currentLng } = currentLocation;
+  const { lat: circleLat, lng: circleLng } = lokasi_unej.value;
+
+  const R = 6371; // Radius of the earth in km
+  const dLat = deg2rad(circleLat - currentLat);
+  const dLon = deg2rad(circleLng - currentLng);
+
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(currentLat)) * Math.cos(deg2rad(circleLat)) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distance = R * c; 
+
+  if (distance <= radiuss / 1000) {
+  
+    console.log("You are within the radius");
+    alert('lokasi anda valid')
+  } else {
+    alert('lokasi anda di luar area Universitas Jember')
+    router.push('/vote')
+    console.log("You are outside the radius");
+  }
+};
   const getImagePath = async(id) =>
   {
     try{
@@ -93,6 +129,7 @@
   onMounted(()=>{
     store.voteStore.fetchOrmawa()
     store.voteStore.fetchPt()
+    checkLocationWithinRadius(getLocation.value,550)
   })
   onBeforeUnmount(()=>{
     store.voteStore.resetNominasiId()

@@ -19,7 +19,8 @@ export const useVoteStores = defineStore('voteStore', {
     pt:[],
     dialog:false,
     detailNominasi:[],
-    check:[]
+    check:[],
+    checkVoteResult:{}
   
  
   }),

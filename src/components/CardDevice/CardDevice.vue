@@ -9,9 +9,9 @@
         </v-card-text>
         <v-divider thickness="3" class="border-opacity-75 border-blue-400"></v-divider>
         <v-card-actions class="d-flex justify-between">
-            <v-chip color="green" variant="tonal">Jatah Voting : 3</v-chip>
+            <v-chip color="green" variant="tonal">Jatah Voting : {{ getJatahVote - getTotalVote }} </v-chip>
             
-            <v-chip color="green" variant="tonal">Terpakai : 0</v-chip>
+            <v-chip color="green" variant="tonal">Terpakai : {{ getTotalVote }}</v-chip>
         </v-card-actions>
       
      </v-card>
@@ -24,6 +24,7 @@ import {storeToRefs} from 'pinia'
 const store = inject('store')
 
 const { getLocation } = storeToRefs(store.mapStore)
+const {getTotalVote,getJatahVote} = storeToRefs(store.deviceStore)
 
 const device = ref('')
 const deviceId = ref('')

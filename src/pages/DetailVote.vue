@@ -7,6 +7,7 @@ import Scanner from '../components/Scanner.vue';
 import {ref,inject,onBeforeUnmount} from 'vue'
 import {storeToRefs} from 'pinia'
 import DetailVotes from '@/components/DetailVotes/DetailVotes.vue';
+import HelloWorld from '@/components/HelloWorld.vue';
 
 const store = inject('store')
 
@@ -25,6 +26,6 @@ onBeforeUnmount(() => {
 
   <Qrcode v-if="getDetail.type == 'qrcode'"></Qrcode>
   
-
+  <HelloWorld></HelloWorld>
  
 </template>

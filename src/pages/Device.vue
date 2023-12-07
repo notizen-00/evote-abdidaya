@@ -1,15 +1,25 @@
 <script setup>
 import ApplicationLayout from '@/layout/ApplicationLayout.vue'
-import HelloWorld from '../components/HelloWorld.vue';
+import HelloWorld from '@/components/HelloWorld.vue';
 import ListVote from '@/components/ListVote/ListVote.vue';
 import CardDevice from '@/components/CardDevice/CardDevice.vue';
 import Maps from '@/components/Maps/Maps.vue';
 import {
     ref,
-    inject
+    inject,
+    onMounted
 }from 'vue'
+import { storeToRefs } from 'pinia';
 const store = inject('store')
 
+
+
+onMounted(()=>{
+  store.mapStore.setGeolocation()
+  store.deviceStore.countMyVote()
+  store.deviceStore.countJatahVote()
+  
+})
 </script>
 
 <template>
